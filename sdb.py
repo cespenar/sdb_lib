@@ -20,7 +20,8 @@ class GyreData(object):
         line 6: body names
         lines 7-: body data
     
-    Ispired by Bill Wolf's PyMesaReader.
+    Ispired by Bill Wolf's PyMesaReader:
+    https://github.com/wmwolf/py_mesa_reader
 
     Parameters
     ----------
