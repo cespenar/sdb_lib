@@ -101,7 +101,84 @@ class GyreData(object):
                 elif i > GyreData.header_names_line:
                     break
         self.header_data = dict(zip(self.header_names, header_data))
+    
+    def is_in_header(self, key):
+        """Determine if 'key' exists in header data.
 
+        Parameters
+        ----------
+        key : str
+            The string to test if it is in header names.
+
+        Returns
+        ----------
+        bool
+            True if 'key' is in header names, otherwise False.
+        """
+        return key in self.header_names
+    
+    def is_in_data(self, key):
+        """Determine if 'key' exists in body data.
+
+        Parameters
+        ----------
+        key : str
+            The string to test if it is a valid column name.
+
+        Returns
+        -------
+        bool
+            True if 'key' is a valid column name, otherwise False.
+        """
+        return key in self.body_names
+    
+    def header(self, key):
+        """Returns a header value for 'key'.
+
+        Parameters
+        ----------
+        key : str
+            The name of in header.
+        
+        Returns
+        ----------
+        numpy.ndarray
+            A value for the name 'key'.
+        
+        Raises
+        ----------
+        KeyError
+            If 'key' is an invalid key.
+        """
+        
+        if self.is_in_header(key):
+            return self.header_data[key]
+        else:
+            raise KeyError(f"{key:s} is not a valid data type")
+
+    def data(self, key):
+        """Returns numpy array with the data column for 'key'.
+
+        Parameters
+        ----------
+        key : str
+            The name of data column.
+        
+        Returns
+        ----------
+        numpy.ndarray
+            An array with data correspoding to the name 'key'.
+        
+        Raises
+        ----------
+        KeyError
+            If 'key' is an invalid key.
+        """
+        
+        if self.is_in_data(key):
+            return self.body_data[key]
+        else:
+            raise KeyError(f"{key:s} is not a valid data type")
 
 
 
