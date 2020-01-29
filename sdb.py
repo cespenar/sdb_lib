@@ -179,6 +179,31 @@ class GyreData(object):
             return self.body_data[key]
         else:
             raise KeyError(f"{key:s} is not a valid data type")
+    
+    def deltaP(self, l, use_seconds=True):
+        """Calculates perdiod spacing sequence from GYRE data.
+
+        Parameters
+        ----------
+        l : int
+            Mode's spherical degree.
+        use_seconds : bool
+            Results in seconds if true, otherwise in days. Default: True.
+
+        Returns
+        ----------
+        deltaP : numpy.ndarray
+            Numpy array with period spacing.
+        """
+        
+        periods = 1.0 / self.data("Refreq")[self.data("l") == l]
+        deltaP = periods[0:len(periods)-1] - periods[1:]
+        if use_seconds:
+            seconds_in_day = 86400.0
+            return deltaP * seconds_in_day
+        else:
+            return deltaP
+
 
 
 
