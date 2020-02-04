@@ -5,6 +5,8 @@ import glob
 import os
 import shutil
 
+seconds_in_day = 86400.0
+
 
 class GyreData(object):
 
