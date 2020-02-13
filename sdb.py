@@ -551,13 +551,18 @@ def find_semiconvection_top(profile, zone_semi_bottom):
     return zone_semi_top
 
 
-def start_semiconvection_model(history):
+def start_semiconvection_model(history, eps=5.0):
     """Finds the model in which the natural semiconvection emerges during the evolution.
 
     Parameters
     ----------
     history : mesa_reader.MesaData
         Evolutionary track (MESA history file) as MesaData object.
+    eps: float, optional
+        The parameter that controls threshold of fluctuations of
+        the mass of convevective core that allows to find where
+        the core shrinks and semiconvective zone emerges.
+        Guessed default is 5.0.
 
     Returns
     ----------
@@ -574,7 +579,7 @@ def start_semiconvection_model(history):
 
     mean_mass = np.mean(history.mass_conv_core[ind05:ind03])
     std_mass = np.std(history.mass_conv_core[ind05:ind03])
-    epsilon = 5.0 * std_mass
+    epsilon = eps * std_mass
     start_model = -1
     for i, m in enumerate(history.mass_conv_core[ind09:ind03][::-1]):
         if np.abs(m - mean_mass) > epsilon:
@@ -593,7 +598,7 @@ def end_semiconvection_model(history, eps = 5.0):
     ----------
     history : mesa_reader.MesaData
         Evolutionary track (MESA history file) as MesaData object.
-    eps : float
+    eps : float, optional
         The parameter that controls threshold of fluctuations of
         the mass of convevective core that allows to find where
         the semiconvective zone becomes ill-defined. Guessed default
